@@ -1,0 +1,17 @@
+{
+  "name": "river-levels",
+  "version": "0.0.1",
+  "description": "quick website to laod guage levels",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matt Price",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "handlebars": "^4.0.11",
+    "request-cookies": "^1.1.0",
+    "request-promise": "^4.2.2"
+  }
+}
