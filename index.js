@@ -35,8 +35,10 @@ var initOptions = {
 function captureGraphs () {
   rp(initOptions)
     .then(function (body) {
-      console.log("SUCCESS");
       getImages();
+      console.log("rp has run without error");
+      console.log(JSON.stringify(body));
+
     })
     .catch(function (err) {
       console.log("ERROR");
@@ -44,7 +46,7 @@ function captureGraphs () {
 }
 
  async function getImages () {
-   console.log(cj);
+   console.log("Cookie Jar: " + JSON.stringify(cj));
    for (r of rivers) {
      let options = {
        jar: cj,
@@ -62,7 +64,10 @@ function captureGraphs () {
          let fname = `./assets/${r.name}.png`;
          console.log(fname);
          rp(image).pipe(fs.createWriteStream(`./assets/${r.name}.png`));
-       });
+       })
+         .catch(function(err) {
+           console.log(err);
+         });
    }
 }
 
@@ -169,6 +174,7 @@ var footer= `</div>
 
 
 async function makePage (){
+  
   let w = await wikiSetup();
 
   var output=header;
