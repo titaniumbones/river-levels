@@ -4,6 +4,7 @@
   "description": "quick website to laod guage levels",
   "main": "index.js",
   "scripts": {
+    "server": "http-server -o",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Matt Price",
