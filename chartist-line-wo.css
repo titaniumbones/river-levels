@@ -48,7 +48,7 @@
 main#main {
     /* margin-top: 300px; */
     display: flex;
-    max-height: 800px;
+    /* max-height: 800px; */
     width:100%;
     grid-column-template: 1fr 1fr 1fr;
     justify-content: space-around;
@@ -60,7 +60,7 @@ main#main {
     flex-basis: 100%;
     /* flex-grow: 1; */
     flex-shrink: 1;
-    max-height: 400px;
+    /* max-height: 400px; */
 }
 
 

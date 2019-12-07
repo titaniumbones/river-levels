@@ -70,7 +70,7 @@ Adding some tab stuff here:
 main#main {
     /* margin-top: 300px; */
     display: flex;
-    max-height: 800px;
+    /* max-height: 800px; */
     width:100%;
     grid-column-template: 1fr 1fr 1fr;
     justify-content: space-around;
@@ -82,7 +82,7 @@ main#main {
     flex-basis: 100%;
     /* flex-grow: 1; */
     flex-shrink: 1;
-    max-height: 400px;
+    /* max-height: 400px; */
 }
 
 
@@ -365,6 +365,28 @@ buildTabs([elora,streetsville, irvine,upperCredit])
 <html lang="en">
     <head>
         <meta charset="UTF-8"/>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="application-name" content="Southern Ontario River Levels & Guide">
+        <meta name="apple-mobile-web-app-title" content="River Levels">
+        <meta name="theme-color" content="#FF9800">
+        <meta name="msapplication-navbutton-color" content="#FF9800">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="msapplication-starturl" content="/index.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="icon" sizes="128x128" href="/images/touch/icon-128x128.png">
+        <link rel="apple-touch-icon" sizes="128x128" href="/images/touch/icon-128x128.png">
+        <link rel="icon" sizes="192x192" href="icon-192x192.png">
+        <link rel="apple-touch-icon" sizes="192x192" href="/images/touch/icon-192x192.png">
+        <link rel="icon" sizes="256x256" href="/images/touch/icon-256x256.png">
+        <link rel="apple-touch-icon" sizes="256x256" href="/images/touch/icon-256x256.png">
+        <link rel="icon" sizes="384x384" href="/images/touch/icon-384x384.png">
+        <link rel="apple-touch-icon" sizes="384x384" href="/images/touch/icon-384x384.png">
+        <link rel="icon" sizes="512x512" href="/images/touch/icon-512x512.png">
+        <link rel="apple-touch-icon" sizes="512x512" href="/images/touch/icon-512x512.png">
+
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>River Conditions & Descriptions</title>
         <!-- Bootstrap CSS -- needs replacing!! -->
@@ -377,14 +399,15 @@ buildTabs([elora,streetsville, irvine,upperCredit])
         <link rel="stylesheet" href="vendor/chartist-plugin-tooltips-updated/chartist-plugin-tooltip.css">
         <link rel="stylesheet" href="vendor/chartist-plugin-threshold/chartist-plugin-threshold.css">
         <link rel="stylesheet" href="chartist-line-wo.css">
+        <link rel="stylesheet" href="https://unpkg.com/js-datepicker/dist/datepicker.min.css">
         <style>
         </style>
     </head>
     <body>
         <!-- Brand new, somewhat silly, nav bar -->
         <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">S. O. Rivers</a>
+            <nav class="nav bg-light">
+                <div class="nav-center"><a class="brand" href="#">S. O. Rivers</a></div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -424,8 +447,15 @@ buildTabs([elora,streetsville, irvine,upperCredit])
                      <p>Tokyo is the capital of Japan.</p>
                      </section> -->
             </section>
+            <form action="">
+                <p class="grouped">
+                    <input name="river" type="text" value="River Name"/>
+                    <input name="date" type="text" value="2019-11-30"/>
+                    <input name="entry" type="text" value="Journal Entry"/>
+                    <button class="button primary">Submit</button>
+                </p>
+            </form>
             
-  
             <!-- <div class="tab-content clearfix" id="riverTabsContent">
 
                  <div class="tab-pane fade show active" id="credit" role="tabpanel" aria-labelledby="credit-tab">
@@ -456,7 +486,21 @@ buildTabs([elora,streetsville, irvine,upperCredit])
 
         <script src="vendor/moment/moment-with-locales.min.js"></script>
         <script src="chartist-line-river.js"></script>
-
+        <script src="https://unpkg.com/js-datepicker/dist/datepicker.min.js"></script>
+        <script>
+         if ('serviceWorker' in navigator) {
+             window.addEventListener('load', () => {
+                 navigator.serviceWorker.register('serviceworker.js')
+                          .then(registration => {
+                              console.log('Service Worker is registered', registration);
+                          })
+                          .catch(err => {
+                              console.error('Registration failed:', err);
+                          });
+             });
+         }
+        </script>
+         
         <!-- ugh. bootstrap!!! -->
         <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"  crossorigin="anonymous"></script>
              <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -466,5 +510,114 @@ buildTabs([elora,streetsville, irvine,upperCredit])
 
     </body>
 </html>
+#+end_src
+
+** Service Worker 
+
+Working on this with help from https://blog.bitsrc.io/understanding-service-workers-and-caching-strategies-a6c1e1cbde03 , [[https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers][MDN]] , firefox 
+
+#+begin_src js :tangle serviceworker.js
+const cacheName = 'v1';
+const precacheResources = [
+  '/',
+  'chartist-line-wo.html',
+  'vendor/chartist/chartist.min.css'
+];
+
+self.addEventListener('install', event => {
+  console.log('Service worker install event!');
+  event.waitUntil(
+    caches.open(cacheName)
+      .then(cache => {
+        return cache.addAll(precacheResources);
+      })
+  );
+});
+
+self.addEventListener('activate', event => {
+  console.log('Service worker activate event!');
+});
+
+self.addEventListener('fetch', event => {
+  console.log('Fetch intercepted for:', event.request.url);
+  event.respondWith(caches.match(event.request)
+                    .then(cachedResponse => {
+                      if (cachedResponse) {
+                        return cachedResponse;
+                      }
+                      return fetch(event.request).then((fetched) => {
+                        return caches.open(cacheName).then( (cache) => {
+                          cache.put(event.request,fetched.clone());
+                          return fetched
+                        }); 
+                      });
+                    })
+                   );
+});
+
+// self.addEventListener('fetch', (event) => {
+//   console.log('Fetch intercepted for: ' , event.request.url)
+//   event.respondWith(
+//     caches.match(event.request).then((resp) => {
+//       // if it's a local resource, or some css or js, then give the cache priority
+//       if (requestURL.origin == location.origin ) {
+//         // Handle article URLs
+//         return resp || fetch(event.request).then((response) => {
+//           return caches.open(cacheName).then((cache) => {
+//             cache.put(event.request, response.clone());
+//             return response;
+//           });  
+//         });
+       
+//       }
+//       // if it's anything else -- that is, live data -- then
+//       // handle differently. RIght now, we ware *not* actually reading from the cache (!)
+//       // instead, we always try to get from the 
+//       event.respondWith(
+//         caches.open(cacheName).then(function(cache) {
+//           return fetch(event.request).then(function(response) {
+//             cache.put(event.request, response.clone());
+//             return response;
+//           });
+//         })
+//       );
+
+
+//     })
+//   );
+// });
+
+// const precacheResources = [
+//   '/',
+//   'index.html',
+//   'chartist-line-wo.html',
+//   'styles/main.css',
+//   'vendor/chartist/chartist.min.css',
+//   'vendor/chartist-plugin-tooltips-updated/chartist-plugin-tooltip.css'
+//   // 'vendor/chartist-plugin-threshold/chartist-plugin-threshold.css',
+//   // 'vendor/chartist-plugin-tooltips-updated/chartist-plugin-tooltip.css',
+//   // 'chartist-line-wo.css',
+//   // 'vendor/gauge-parsers/gaugeParser.js',
+//   // 'vendor/markdown-it/markdown-it.min.js',
+//   // 'vendor/markdown-it-attrs/markdown-it-attrs.browser.js',
+//   // 'vendor/chartist/chartist.js',
+//   // 'vendor/chartist-segmented-line/segmented-line.js',
+//   // 'vendor/chartist-plugin-tooltips-updated/chartist-plugin-tooltip.js',
+//   // 'vendor/moment/moment-with-locales.min.js',
+//   // 'chartist-line-river.js'
+// ];
+
+
+// self.addEventListener('fetch', event => {
+//   console.log('Fetch intercepted for:', event.request.url);
+//   event.respondWith(caches.match(event.request)
+//                     .then(cachedResponse => {
+//                       if (cachedResponse) {
+//                         return cachedResponse;
+//                       }
+//                       return fetch(event.request);
+//                     })
+//                    );
+// });
 #+end_src
 
