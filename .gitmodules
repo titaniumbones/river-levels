@@ -1,0 +1,6 @@
+[submodule "vendor/gauge-parsers"]
+	path = vendor/gauge-parsers
+	url = git@github.com:titaniumbones/gauge-parsers.git
+[submodule "vendor/chartist-segmented-line"]
+	path = vendor/chartist-segmented-line
+	url = git@github.com:titaniumbones/chartist-segmented-line.git
