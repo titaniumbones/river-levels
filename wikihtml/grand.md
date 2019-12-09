@@ -7,38 +7,8 @@ its source, it flows south through Grand Valley, Fergus, Elora,
 Waterloo, Kitchener, Cambridge, Paris, Brantford, Caledonia, and Cayuga
 before emptying into the north shore of Lake Erie south of Dunnville at
 Port Maitland. One of the scenic and spectacular features of the river
-is the falls and gorge at Elora.
+is the falls and gorge at Elora.([from Wikipedia](https://en.wikipedia.org/wiki/Grand_River_(Ontario)))
 
-The Grand River is the largest river entirely within southern Ontario's
-boundaries. The river owes its size to the unusual fact that it has its
-source relatively close to the base of the Bruce Peninsula, yet flows
-southwards to Lake Erie, rather than to central Lake Huron or Georgian
-Bay (most southern Ontario rivers flow into the nearest Great Lake,
-which is why most of them are small), thus giving it more distance to
-take in more water from tributaries.
+The section of the Grand must commonly run is often called the "Elora Run" and  extends from just below [the Tooth of Time](https://www.google.com/search?sxsrf=ACYBGNQD9ZVe0WApvSUGd1wrvnUgNNeLRQ:1575925373870&q=tooth+of+time+elora&tbm=isch&source=univ&client=firefox-b-d&sa=X&ved=2ahUKEwjG-OfAu6nmAhVNTd8KHSD9BYAQsAR6BAgFEAE&biw=1483&bih=869) to just before a low-head dam near the southern parking lot of the GRCA recreation area. There are several small sets in the Class II/II+ range, including reliable surf waves at most levels. The most significant feature is The Chute, a class II/III/III+ set with interesting contours and several runnable lines, about half way through the run. 
 
-The river's rural character, ease of access and lack of portages make it
-a desirable canoeing location, especially the stretch between West
-Montrose and Paris, Ontario. A number of conservation areas exist in the
-area of the river, managed by the Grand River Conservation Authority.
-
-(Source: Wikipedia)
-
-  
-
-<span id="Watershed_Information"></span>
-
-### <span class="mw-headline"> Watershed Information </span>
-
-[![File:Watershed.jpg](/web/20170721172702im_/http://www.whitewaterontario.ca:80/rivers/images/9/93/Watershed.jpg)](/web/20170721172702/http://www.whitewaterontario.ca:80/rivers/index.php/File:Watershed.jpg "File:Watershed.jpg")
-
-<span id="Whitewater_on_the_Grand_River"></span>
-
-## <span class="mw-headline"> Whitewater on the Grand River </span>
-
-There are several main sections of the Grand River that contain fabulous
-whitewater. The most well known is the [Elora
-Gorge](/web/20170721172702/http://www.whitewaterontario.ca:80/rivers/index.php/Grand_River_\(Elora_Gorge\) "Grand River (Elora Gorge)")
-located in Elora, Ontario.
-
-Add more.
+In summer, the section from the Chute to the take-out is popular with tubers; dodging these tourists can be something of a challenge in an otherwise mild, low-water season. 
