@@ -257,16 +257,24 @@ background-color: (red, green);
 ** JS
 
 #+begin_src javascript :tangle chartist-line-river.js
+// global constants for page-level elements
 const linkContainer = document.querySelector('#tablist');
 const tabContainer = document.querySelector('#tabContainer')
+
+// another global for the md parser
 const md = window.markdownit('commonmark', {
   html: true,
   linkify: true});
 /* use footnote, attribute and emoji plugins */
 md.use(window.markdownItAttrs);
 
+
+// This tabs code is adapted from https://www.w3schools.com/howto/howto_js_tabs.asp
+// It's not super-sophisticated. 
+
+
 /**
- ,* Show the relevanttab.  gotta figure out what the proper classes are
+ ,* Show the relevant tab. This sorta kinda works.  
  ,* @param {} evt
  ,* @param {} tabName
  ,*/
@@ -301,6 +309,22 @@ async function buildTab (river) {
   // tabcontents.style.visibility='hidden'
   const description = document.createElement('section');
   tabcontents.appendChild(description);
+  if (river.points) {
+    const ps = river.points;
+    let pointsMD = `## Map Links\n`
+    if (ps.putin) {
+      const p = ps.putin;
+      const maplink= `https://www.google.com/maps/dir/?api=1&destination=${p[0]},${p[1]}`
+      pointsMD += `- [Directions to Put-in](${maplink})\n`
+    }
+    if (ps.takeout) {
+      const p = ps.takeout;
+      const maplink= `https://www.google.com/maps/dir/?api=1&destination=${p[0]},${p[1]}`
+      pointsMD += `- [Directions to Take-out](${maplink})`
+    }
+
+    description.innerHTML += md.render(pointsMD);
+  }
   fetch (`./wikihtml/${river.slug}.md`)
     .then( (res) => res.text())
     .then( (markdown) => (markdown.length > 0) ? description.innerHTML += md.render(markdown) : description.innerHTML += md.render( '## Unable to fetch river description, sorry\n\nMaybe it hasn\'t been written yet?'))

@@ -1,13 +1,21 @@
+// global constants for page-level elements
 const linkContainer = document.querySelector('#tablist');
 const tabContainer = document.querySelector('#tabContainer')
+
+// another global for the md parser
 const md = window.markdownit('commonmark', {
   html: true,
   linkify: true});
 /* use footnote, attribute and emoji plugins */
 md.use(window.markdownItAttrs);
 
+
+// This tabs code is adapted from https://www.w3schools.com/howto/howto_js_tabs.asp
+// It's not super-sophisticated. 
+
+
 /**
- * Show the relevanttab.  gotta figure out what the proper classes are
+ * Show the relevant tab. This sorta kinda works.  
  * @param {} evt
  * @param {} tabName
  */
@@ -17,24 +25,30 @@ function openTab(evt, tabName, tabSelectors={content:'tabcontent', links: 'tabli
 
   // Get all elements with class="tabcontent" and hide them
   tabcontent = tabSelectors.context.querySelectorAll('.' + tabSelectors.content);
-  for (let i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
+  tabcontent.forEach( tab => tab.classList.remove('active'));
 
   // Get all elements with class="tablinks" and remove the class "active"
   tablinks = tabSelectors.context.querySelectorAll('.' + tabSelectors.links);
-  for (let i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+  tablinks.forEach( tab => tab.classList.remove('active'));
+
 
   // Show the current tab, and add an "active" class to the button that opened the tab
-  document.querySelector('#' + tabName).style.display = null ;
+  tabSelectors.context.querySelector('#' + tabName).classList.add('active'); //do this with classes!
+  // trigger chartist update event on tab -- mostly for first click, otherwise it doesn't
+  // know its size (b/c display:none on start. )
+  document.querySelector(`#${tabName} figure`).__chartist__.update()
+  console.log(document.querySelector('#' + tabName) );
   evt.currentTarget.className += " active";
 } 
 
+
+// the main tab-building function for *info tabs*
+// if we're going to add a journal, those entries will need their own interfaces
+// and this fn may need to be renamed.  
 async function buildTab (river) {
   linkContainer.innerHTML += `<a class="tablinks"onclick="openTab(event, '${river.slug}')">${river.slug}</a>`;
   const tabcontents = document.createElement('section');
+  // tabcontents.style.display = 'none';
   tabcontents.id = river.slug;
   tabcontents.classList += 'tabcontent';
   tabcontents.innerHTML = `<figure class="ct-chart ct-perfect-fourth" id="${river.slug}-chart"><figcaption><h2>Waiting</h2></figcaption></figure>`
@@ -42,6 +56,22 @@ async function buildTab (river) {
   // tabcontents.style.visibility='hidden'
   const description = document.createElement('section');
   tabcontents.appendChild(description);
+  if (river.points) {
+    const ps = river.points;
+    let pointsMD = `## Map Links\n`
+    if (ps.putin) {
+      const p = ps.putin;
+      const maplink= `https://www.google.com/maps/dir/?api=1&destination=${p[0]},${p[1]}`
+      pointsMD += `- [Directions to Put-in](${maplink})\n`
+    }
+    if (ps.takeout) {
+      const p = ps.takeout;
+      const maplink= `https://www.google.com/maps/dir/?api=1&destination=${p[0]},${p[1]}`
+      pointsMD += `- [Directions to Take-out](${maplink})`
+    }
+
+    description.innerHTML += md.render(pointsMD);
+  }
   fetch (`./wikihtml/${river.slug}.md`)
     .then( (res) => res.text())
     .then( (markdown) => (markdown.length > 0) ? description.innerHTML += md.render(markdown) : description.innerHTML += md.render( '## Unable to fetch river description, sorry\n\nMaybe it hasn\'t been written yet?'))
