@@ -46,7 +46,46 @@ If the checkbox is ticked, then the feature has been implemented; if not, it's p
 * Technical Description
 
 ** TODO Describe Internal Data Structures (rivers, gauges, surf spots, etc)
+*** River Definitions
+River definitions are Javascript Simple Objects with the following structure:
+#+begin_src js
+thisRiver = {
+  name: "string", // unique name
+  shortName: "string" // abbreviation to use in tab construction
+  // gauge-related props will be folded into a new array property `gauges`
+  // at a future date, to allow for multiple gaube readouts
+  "gaugeType": "wateroffice", // one of 'wateroffice', 'cvc', or 'grca'
+  "gaugeID": "02GA005", // unique gauge ID
+  "slug": "irvine", // used in the cunstruction of element classes & ids
+  "units": "cms", // generally 'cms' or 'height'
+  // will eventually be replaced with more complex objects
+  // cf. leaflet & gmaps for some plausible properties
+  "points":{  
+    "putin": [43.702321, -80.445578] ,
+    "takeout": [43.662701, -80.453265] 
+  },
+  // use this to color-code the levels
+  "levels": [[0,4.6,"bad"], [4.6,8,"shoulder"], [8,50,"good"],[50,100,"shoulder"]],
+  // not really using this right now -- can be used to set a runnability threshold
+  "minHeight": 4.6
+}
+#+end_src
+
 
 ** TODO Document JS code w/ js-doc
-
+yeah.... that needs doing
 ** TODO Describe technical roadmap
+*** v 0.1 
+- tabs work with no issues
+- biggest CSS issues are resolved
+- river def'n is set
+- add maps
+*** v 0.2
+- extraneous files ruthlessly purged
+- relevant libraries (e.g. gaugeParser.js) merged bck into this project
+- stop using org files for literate programming, switch to plain old html/css/js
+*** v 1.0
+- offline storage
+- journal implemented
+*** v 2.0 (or whatever) rewrite in react
+
