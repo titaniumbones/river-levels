@@ -419,33 +419,20 @@ buildTabs([elora,streetsville, irvine,upperCredit])
             </nav>
             <nav class="nav">
                 <div id="tablist" class="nav-center tabs">
-                    <!-- <button class="tablinks" onclick="openTab(event, 'London')">London</button>
-                         <button class="tablinks" onclick="openTab(event, 'Paris')">Paris</button>
-                         <button class="tablinks" onclick="openTab(event, 'Tokyo')">Tokyo</button> -->
+
                 </div>
             </nav>
 
         </header>
         <!-- Site content goes here !-->
         <main id="main" class="container">
-            <!-- Tab links -->
-
+        
+            <section class="alert">
+                <div class="disclaimer"></div>
+                <div class="attribution">Data </div>
+            </section>
             <!-- Tab content -->
             <section id="tabContainer">
-                <!-- <section id="London" class="tabcontent">
-                     <h3>London</h3>
-                     <p>London is the capital city of England.</p>
-                     </section>
-
-                     <section id="Paris" class="tabcontent">
-                     <h3>Paris</h3>
-                     <p>Paris is the capital of France.</p>
-                     </section>
-
-                     <section id="Tokyo" class="tabcontent">
-                     <h3>Tokyo</h3>
-                     <p>Tokyo is the capital of Japan.</p>
-                     </section> -->
             </section>
             <form action="">
                 <p class="grouped">
@@ -456,24 +443,8 @@ buildTabs([elora,streetsville, irvine,upperCredit])
                 </p>
             </form>
             
-            <!-- <div class="tab-content clearfix" id="riverTabsContent">
-
-                 <div class="tab-pane fade show active" id="credit" role="tabpanel" aria-labelledby="credit-tab">
-                 <div class="card">
-                 <figure class="d-block mx-auto graph-figure">
-                 <img alt="graph of water level and discharge rates on the credit river" class="rounded mx-auto d-block figure-img img-fluid" style="max-height:60vh;" src="assets/credit.png"/>
-                 <figcaption class="figure-caption">Curent Levels on the credit</figcaption>
-                 </figure>
-                 <div class="wiki">
-                 </div>
-                 </div>
-                 
-                 </div>
-
-                 </div> -->
 
         </main>
-        <!-- <script src="wateroffice.js"></script> -->
         <script src="vendor/gauge-parsers/gaugeParser.js"></script>
         <script src="vendor/markdown-it/markdown-it.min.js"></script>
         <script src="vendor/markdown-it-attrs/markdown-it-attrs.browser.js"></script>
@@ -490,24 +461,24 @@ buildTabs([elora,streetsville, irvine,upperCredit])
         <script>
          if ('serviceWorker' in navigator) {
              window.addEventListener('load', () => {
-                 navigator.serviceWorker.register('serviceworker.js')
-                          .then(registration => {
-                              console.log('Service Worker is registered', registration);
-                          })
-                          .catch(err => {
-                              console.error('Registration failed:', err);
-                          });
-             });
+                 /* navigator.serviceWorker.register('serviceworker.js')
+                  ,*          .then(registration => {
+                  ,*              console.log('Service Worker is registered', registration);
+                  ,*          })
+                  ,*          .catch(err => {
+                  ,*              console.error('Registration failed:', err);
+                  ,*          });
+,*/
+                 navigator.serviceWorker.getRegistrations().then(
+                     function(registrations) {
+                         for(let registration of registrations) {  
+                             registration.unregister();
+                         }
+                 });
+             }); 
          }
         </script>
          
-        <!-- ugh. bootstrap!!! -->
-        <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"  crossorigin="anonymous"></script>
-             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-             <script src="vendor/lightbox/ekko-lightbox.min.js"></script> -->
-
-
     </body>
 </html>
 #+end_src
