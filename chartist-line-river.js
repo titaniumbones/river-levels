@@ -159,8 +159,6 @@ function projectY(chartRect, bounds, value) {
   return chartRect.y1 - (chartRect.height() / bounds.max * value)
 }
 
-let charts
-buildTabs([elora,streetsville, irvine,upperCredit])
 function addWarning () {
   const alertSec = document.querySelector(`main .alert`);
   const disclaimer = md.render(`Under heavy development! Lots of features may not work as expected and any data entered here is 
