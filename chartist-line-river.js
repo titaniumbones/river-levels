@@ -153,20 +153,6 @@ async function buildChart (spot, selector='#waves-chart') {
   return await chart;
 }
 
-function buildCharts () {
-  const chartMap = [ [elora, '#elora'], [streetsville, '#lower-credit'], [irvine, '#irvine'], [upperCredit, '#upper-credit'] ]
-  charts = []
-  for (let m of chartMap) {
-    if (! document.querySelector(m[1])) {
-      const el = document.createElement('figure');
-      el.id = m[1].substr(1);
-      
-      el.setAttribute('class', 'ct-chart ct-perfect-fourth')
-      el.innerHTML='<figcaption><h2></h2></figcaption>'
-      document.querySelector('#main').appendChild(el);
-    }
-    charts.push(buildChart(m[0], m[1]))
-  }
 }
 
 function projectY(chartRect, bounds, value) {
