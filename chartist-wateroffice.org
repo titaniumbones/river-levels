@@ -368,7 +368,7 @@ function generateTooltip (meta, value) {
 
 async function buildChart (spot, selector='#waves-chart') {
   console.log(spot,selector)
-  const processed = await processGauge(spot), // consider using 
+  const processed = await processGauge(spot), // CRUCIAL ISSUE HERE! need to intercept this call.
         header = document.querySelector(`${selector} figcaption h2`);
   // console.log(spot.units + " THESE ARE UNITS");
   header.innerHTML = `${spot.name} Water Levels (Latest)`
