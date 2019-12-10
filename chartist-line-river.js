@@ -175,4 +175,30 @@ function projectY(chartRect, bounds, value) {
 
 let charts
 buildTabs([elora,streetsville, irvine,upperCredit])
+function addWarning () {
+  const alertSec = document.querySelector(`main .alert`);
+  const disclaimer = md.render(`Under heavy development! Lots of features may not work as expected and any data entered here is 
+- (a) insecure and 
+- (b) likely to be erased soon. 
+
+For more information [Please, Please, Please consult the source code repository](https://github.com/titaniumbones/river-levels).
+
+Please **do not rely on the accuracy of this data!** Sorry/not sorry!!`);
+  const attribution = md.render(`Data for the charts on this site comes from a variety of sources, including:
+- [Water Office of the Canadian Ministry of the Environment](https://wateroffice.ec.gc.ca/mainmenu/real_time_data_index_e.html)
+- [Grand River Conservation Area](https://www.grandriver.ca/en/our-watershed/River-and-stream-flows.aspx)
+- [Credit Valley conservation](https://cvc.ca/watershed-science/watershed-monitoring/real-time-monitoring/west-credit-river-belfountain-conservation-area/)\n`)
+  const removeButton = `<a class="button error" onclick="removeWarning()">Hide this Warning (it'll return on reload, sorry)</a>`
+  alertSec.querySelector(`.disclaimer`).innerHTML += disclaimer;
+  alertSec.querySelector(`.attribution`).innerHTML += attribution;
+  alertSec.innerHTML += removeButton;
+  alertSec.classList.add('active');
+}
+
+function removeWarning() {
+  document.querySelector(`main .alert`).classList.remove('active');
+}
+addWarning();
+let charts = buildTabs([elora,streetsville, irvine,upperCredit])
+    .then( values => values)
   // .then( (all) => setTimeout(openTab({currentTarget: document.querySelector('#grand')}, 'grand'), 10000))
