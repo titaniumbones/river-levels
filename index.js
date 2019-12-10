@@ -90,7 +90,7 @@ Handlebars.registerHelper('show', function(options) {
 
 async function wikiSetup () {
   for (let r of rivers) {
-    let data = await readFile(`./wikihtml/${r.name}.html`, 'utf8');
+    let data = await readFile(`./wikihtml/${r.slug}.html`, 'utf8');
     // (err, data) => {
     //   if (err) throw err;
     //   //console.log(data);
@@ -99,14 +99,12 @@ async function wikiSetup () {
       console.log(r.name);
   }
 }
-var tabContentSource = `<div class="tab-pane fade{{#show}}{{/show}}" id="{{name}}" role="tabpanel" aria-labelledby="{{name}}-tab">
+var tabContentSource = `<div class="tab-pane fade{{#show}}{{/show}}" id="{{slug}}" role="tabpanel" aria-labelledby="{{name}}-tab">
         <div class="card">
-         <a href="assets/{{name}}.png" data-toggle="lightbox" data-gallery="graphs" data-title="{{name}} river" data-footer="Discharge in yellow, water height in green, historical mean discharge is the dotted red line.">
-          <figure class="d-block mx-auto graph-figure">
-            <img alt="graph of water level and discharge rates on the {{name}} river" class="rounded mx-auto d-block figure-img img-fluid" style="max-height:60vh;" src="assets/{{name}}.png"/>
+          <figure class="d-block mx-auto graph-figure" id={{slug}}>
+
             <figcaption class="figure-caption">Curent Levels on the {{name}}</figcaption>
           </figure>
-         </a>
          <div class="wiki">
         {{{wiki}}}
         </div>
