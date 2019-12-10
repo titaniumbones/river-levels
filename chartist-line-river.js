@@ -72,7 +72,7 @@ async function buildTab (river) {
 
     description.innerHTML += md.render(pointsMD);
   }
-  fetch (`./wikihtml/${river.slug}.md`)
+  fetch (`./descriptions/${river.slug}.md`)
     .then( (res) => res.text())
     .then( (markdown) => (markdown.length > 0) ? description.innerHTML += md.render(markdown) : description.innerHTML += md.render( '## Unable to fetch river description, sorry\n\nMaybe it hasn\'t been written yet?'))
     .catch (() => (err) => description.innerHTML +=
