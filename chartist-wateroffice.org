@@ -337,11 +337,15 @@ async function buildTab (river) {
 }
 
 async function buildTabs (rivers) {
-  let allPromises = [];
+  let allCharts = [];
   for (const r of rivers) {
-    allPromises += buildTab(r);
+    allCharts += buildTab(r).then( (c) => {r.chart = c; return c} )
   }
-  return Promise.all(allPromises).then(() => allPromises);
+  
+  return Promise.all(allCharts).then(resolvedAll => {
+    document.querySelector('.tabcontent').classList.add('active');
+    return resolvedAll
+  });
   // return allPromises
   // Promise.all(allPromises).then( () => openTab({target: document.querySelector('#gorge')}, 'gorge') );
 }
