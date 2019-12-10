@@ -284,24 +284,30 @@ function openTab(evt, tabName, tabSelectors={content:'tabcontent', links: 'tabli
 
   // Get all elements with class="tabcontent" and hide them
   tabcontent = tabSelectors.context.querySelectorAll('.' + tabSelectors.content);
-  for (let i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
+  tabcontent.forEach( tab => tab.classList.remove('active'));
 
   // Get all elements with class="tablinks" and remove the class "active"
   tablinks = tabSelectors.context.querySelectorAll('.' + tabSelectors.links);
-  for (let i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+  tablinks.forEach( tab => tab.classList.remove('active'));
+
 
   // Show the current tab, and add an "active" class to the button that opened the tab
-  document.querySelector('#' + tabName).style.display = null ;
+  tabSelectors.context.querySelector('#' + tabName).classList.add('active'); //do this with classes!
+  // trigger chartist update event on tab -- mostly for first click, otherwise it doesn't
+  // know its size (b/c display:none on start. )
+  document.querySelector(`#${tabName} figure`).__chartist__.update()
+  console.log(document.querySelector('#' + tabName) );
   evt.currentTarget.className += " active";
 } 
 
+
+// the main tab-building function for *info tabs*
+// if we're going to add a journal, those entries will need their own interfaces
+// and this fn may need to be renamed.  
 async function buildTab (river) {
   linkContainer.innerHTML += `<a class="tablinks"onclick="openTab(event, '${river.slug}')">${river.slug}</a>`;
   const tabcontents = document.createElement('section');
+  // tabcontents.style.display = 'none';
   tabcontents.id = river.slug;
   tabcontents.classList += 'tabcontent';
   tabcontents.innerHTML = `<figure class="ct-chart ct-perfect-fourth" id="${river.slug}-chart"><figcaption><h2>Waiting</h2></figcaption></figure>`
