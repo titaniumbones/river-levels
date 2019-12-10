@@ -153,11 +153,70 @@ async function buildChart (spot, selector='#waves-chart') {
   return await chart;
 }
 
+async function updateChart (selector, series) {
+  document.querySelector(selector).__chartist__.update(series);
 }
+
+navigator.serviceWorker.addEventListener('message', event => {
+  console.log('message received', event.data);
+});
 
 function projectY(chartRect, bounds, value) {
   return chartRect.y1 - (chartRect.height() / bounds.max * value)
 }
+
+
+////////////////////////////////////////////////////////////////////
+// service-worker caching magic:                                  //
+// try to get from network, but meanwhile display data from cache //
+////////////////////////////////////////////////////////////////////
+
+let networkDataReceived = false;
+
+// startSpinner();
+
+// fetch fresh data
+
+async function cacheThenFetch (url, river) {
+  let networkDataReceived = false;
+  const networkUpdate = fetch(url)
+        .then( response => response.json())
+        .then( data => {
+          networkDataReceived = true;
+          // TODO: what's the thing we do after this?  Return the data? 
+        })
+  caches.match(url).then( (response) => {
+    if (!response) throw Error (`No data in cache for ${url}, the network is the only hope.`)
+    return response.json();
+  }).then( (data) => {
+    if (!networkDataReceived) {
+      // TODO: what's the thing we do after this? just return the data?
+    }
+  }).catch( () => networkUpdate)
+  .catch(showErrorMessage)
+
+}
+
+// const networkUpdate = fetch('/data.json').then(function(response) {
+//   return response.json();
+// }).then(function(data) {
+//   networkDataReceived = true;
+//   updatePage(data);
+// });
+
+// // fetch cached data
+// caches.match('/data.json').then(function(response) {
+//   if (!response) throw Error("No data");
+//   return response.json();
+// }).then(function(data) {
+//   // don't overwrite newer network data
+//   if (!networkDataReceived) {
+//     updatePage(data);
+//   }
+// }).catch(function() {
+//   // we didn't get cached data, the network is our last hope:
+//   return networkUpdate;
+// }).catch(showErrorMessage).then(stopSpinner);
 
 function addWarning () {
   const alertSec = document.querySelector(`main .alert`);
