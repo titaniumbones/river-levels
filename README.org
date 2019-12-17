@@ -2,6 +2,9 @@
 
 This repository houses code for an experimental "conditions dashboard" for *whitewater river levels* and *surf spot wave forecasts* in southern Ontario. It draws data from various sources & presents it mostly in *line chart form* for quick checks of current conditions. The project is supposed to provide *a centralized spot to check forecasts*, but also *an opportunity for me to learn various newer web technologies*, so you shouldn't rely on it or expect any kind of data persistence at all, at least for the present.
 
+** Access
+
+Working on a proper deployment schedule, but for now everything in my dev repo is just synced to https://riverlevels.hackinghistory.ca, where you can access [[https://riverlevels.hackinghistory.ca/rivers.html][Actual Live River Data]] and [[https://riverlevels.hackinghistory.ca/lakes.html][Simulated Lake Surface Forecast Data]], with the hope of bringing the wave tool online soon. Just beginning work on [[rivers-react.html][a React implementation]] which may eventually replace what's already here.   
 * Feature List (user facing)
 
 If the checkbox is ticked, then the feature has been implemented; if not, it's planned but doesn't work yet.
