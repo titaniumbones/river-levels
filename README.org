@@ -36,18 +36,15 @@ If the checkbox is ticked, then the feature has been implemented; if not, it's p
     - [ ] offline caching of data to allow use of charts when wifi fails.  
     - [ ] *DATA ATTRIBUTION* -- I haven't added this yet *at all* so please, if you're using the site, don't share widely -- I'm in copyright violation, or at least good-neighbour violation.  
 
-
 * Data Sources
 
 *ADD ATTRIBUTION*
-
 
 * Contributions/Suggestions
 
 *Please use the [[https://github.com/titaniumbones/river-levels/issues][Github Issues Tracker]]* for ideas/bug reports/improvements. Thanks!
 
 * Technical Description
-
 ** TODO Describe Internal Data Structures (rivers, gauges, surf spots, etc)
 *** River Definitions
 River definitions are Javascript Simple Objects with the following structure:
@@ -56,7 +53,7 @@ thisRiver = {
   name: "string", // unique name
   shortName: "string" // abbreviation to use in tab construction
   // gauge-related props will be folded into a new array property `gauges`
-  // at a future date, to allow for multiple gaube readouts
+  // at a future date, to allow for multiple gauge readouts
   "gaugeType": "wateroffice", // one of 'wateroffice', 'cvc', or 'grca'
   "gaugeID": "02GA005", // unique gauge ID
   "slug": "irvine", // used in the cunstruction of element classes & ids
@@ -73,7 +70,6 @@ thisRiver = {
   "minHeight": 4.6
 }
 #+end_src
-
 
 ** TODO Document JS code w/ js-doc
 yeah.... that needs doing
